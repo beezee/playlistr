@@ -1,5 +1,6 @@
 module.exports = {
     db: "mongodb://localhost/ytpl",
+    port: 8000,
     app: {
         name: "MEAN - A Modern Stack - Production"
     },
