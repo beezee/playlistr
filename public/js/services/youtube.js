@@ -51,5 +51,5 @@ window.angular.module('mean.ytpl').factory('YouTube', ['$http',
 			nextPage: nextPage,
 			prevPage: prevPage
 		};
-            
+				
     }]);

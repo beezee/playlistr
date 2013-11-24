@@ -1,5 +1,5 @@
-window.angular.module('mean.ytpl').factory('Player', 
-	function(){
+window.angular.module('mean.ytpl').factory('Player', ['$document',
+	function($document){
 		var self = this;
 		this.instance = { getVolume: function(){ return 100; }, setVolume: function(volume){} };
         this.currentPlaylist = {name: 'New Playlist', videos: []};
@@ -85,6 +85,13 @@ window.angular.module('mean.ytpl').factory('Player',
 			}
 		};
 
+		var document = $document[0];
+		var tag = document.createElement('script');
+
+		tag.src = "https://www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 		return this;	
-	});
+	}]);
 
