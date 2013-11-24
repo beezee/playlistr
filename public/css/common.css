@@ -1,3 +1,27 @@
+.clickable {
+    cursor: pointer;
+}
+
+.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+	width: 95%;
+}
+
+.active-playlist-item{
+	background-color:#d9edf7;
+}
+
+ul.thumbnails li.span4:nth-child(3n + 4) {
+  margin-left : 0px;
+}
+
+ul.thumbnails li.span3:nth-child(4n + 5) {
+  margin-left : 0px;
+}
+
+ul.thumbnails li.span12 + li {
+  margin-left : 0px;
+}
+
 .navbar .nav>li>a.brand {
     padding-left:20px;
     margin-left:0

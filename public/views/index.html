@@ -1,3 +1,99 @@
-<section data-ng-controller="IndexController">
-	<h1>This is the home view</h1>
+<section data-ng-controller="PlayerController">
+	<div class="row-fluid">
+		<div class="span4">
+			<div class="video-nav" style="position:fixed;width:31%;">
+				<div class="hub alert" style="padding:2px;">
+					<div class="player">
+						<iframe ng-src="//www.youtube.com/embed/wsqFR5bh6Q?controls=0&showInfo=0&enablejsapi=1"
+								frameborder="0" allowfullscreen id="player"></iframe>
+						<br />
+						<rating value="volume" max="10" state-on="'icon-volume-up'" state-off="'icon-minus'"></rating>
+					</div>
+					<br />
+					<input type="text" placeholder="Search..." ng-model="query" ng-change="findVideos()" class="form-control"/>
+					<div class="btn-group pull-right" ng-show="searchResults.length > 0">
+						<button class="btn btn-mini btn-info" ng-click="prevPage()" ng-show="youtube.getPage() > 0">
+							<i class="icon-chevron-left icon-white"></i>
+						</button>
+						<button class="btn btn-mini btn-info">Page {{ youtube.getPage()+1 }}</button>
+						<button class="btn btn-mini btn-info" ng-click="nextPage()">
+							<i class="icon-chevron-right icon-white"></i>
+						</button>
+					</div>
+					<br />
+				</div>
+				<div ng-controller="PlaylistsController">
+					<div class="row-fluid" ng-hide="playlistNeedsName">
+						<div class="pull-left">
+							<div class="input-append">
+								<select ng-model="player.currentPlaylist" ng-options="p.name for p in playlists"></select>
+								<button class="btn btn-info" ng-click="savePlaylist()"
+									ng-show="player.currentPlaylist.videos.length > 0 && player.playlistEdited">
+									<i class="icon-ok icon-white"></i>
+								</button>
+							</div>
+						</div>
+						<div ng-show="player.currentPlaylist.videos.length > 0" class="btn-group pull-right" style="margin-bottom:3px;">
+							<button class="btn btn-info" ng-click="player.previousVideo()">
+								<i class="icon-step-backward icon-white"></i>
+							</button>
+							<button class="btn btn-info" ng-click="player.startPlaylist()">
+								<i class="icon-play icon-white"></i>
+							</button>
+							<button class="btn btn-info" ng-click="player.nextVideo()">
+								<i class="icon-step-forward icon-white"></i>
+							</button>
+						</div>
+					</div>
+					<div class="row-fluid" ng-show="playlistNeedsName">
+						<div class="input-append input-prepend">
+							<span class="add-on">Name this playlist:</span>		
+							<input class="input-medium" type="text" ng-model="player.currentPlaylist.name" />	
+							<button class="btn btn-info" ng-click="savePlaylist()">
+								<i class="icon-ok icon-white"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="playlist" ui-sortable="player.playlistSorterSettings" ng-model="player.currentPlaylist.videos" ng-show="player.currentPlaylist.videos.length > 0" style="overflow-y:scroll;max-height:300px;">
+					<div class="row-fluid" ng-repeat="track in player.currentPlaylist.videos">
+                        <div class="span10">
+                            <div ng-class="{'active-playlist-item': $index == player.nowPlaying}">
+                                <small>{{ track.title | truncate:50 }}</small>
+                            </div>
+                        </div>
+                        <div class="span2">
+                           <i class="clickable icon-play" ng-click="player.startPlaylist($index)"></i>
+                           <i class="clickable icon-remove" ng-click="player.removeFromPlaylist($index)"></i>
+                            <i class="icon-move"></i>
+                        </div>
+						<hr style="margin:0px;"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="span8">
+			<ul class="thumbnails" ng-init="findVideos()">
+				<li class="span4" ng-repeat="result in searchResults">
+					<div class="thumbnail">
+						<div style="position:relative">
+							<img ng-src="{{ result.thumbnail }}" />
+							<div class="title" 
+								style="height:45px;width:100%;position:absolute;top:0px;left:0px;color:white;background-color:black;">
+								<small>{{result.title | truncate:55 }}</small>
+							</div>
+							<div class="actions" style="position:absolute;bottom:2px;right:2px;">
+								<button class="btn btn-info" ng-click="player.addToPlaylist(result)">
+									<i class="icon-plus icon-white" ></i>
+								</button>
+								<button class="btn btn-info" ng-click="player.playVideo(result.id)">
+									<i class="icon-play icon-white"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
 </section>
