@@ -1,27 +1,9 @@
-module.exports = {
+var _ = require('underscore');
+
+module.exports = _.extend({
     db: "mongodb://localhost/ytpl",
     port: 8000,
     app: {
-        name: "MEAN - A Modern Stack - Production"
+        name: "Playlistr - YouTube on IV drip"
     },
-    facebook: {
-        clientID: "APP_ID",
-        clientSecret: "APP_SECRET",
-        callbackURL: "http://localhost:3000/auth/facebook/callback"
-    },
-    twitter: {
-        clientID: "CONSUMER_KEY",
-        clientSecret: "CONSUMER_SECRET",
-        callbackURL: "http://localhost:3000/auth/twitter/callback"
-    },
-    github: {
-        clientID: "APP_ID",
-        clientSecret: "APP_SECRET",
-        callbackURL: "http://localhost:3000/auth/github/callback"
-    },
-    google: {
-        clientID: "APP_ID",
-        clientSecret: "APP_SECRET",
-        callbackURL: "http://localhost:3000/auth/google/callback"
-    }
-}
+}, require(__dirname+'/../../../playlistr.socialConfig.js'));
